@@ -34,8 +34,10 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v portainer_data:/data portainer/portainer-ce:latest
     ```
+
 Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o desenvolvimento:
-- [The Things Network](https://www.thethingsnetwork.org/): Gestão da rede LoRaWAN (substituindo o Chirpstack para que a implementação seja simplificada);
+
+- [The Things Network (TTN)](https://www.thethingsnetwork.org/): Gestão da rede LoRaWAN (substituindo o Chirpstack para que a implementação seja simplificada);
   
 - [Ngrok](https://ngrok.com/): Permite o acesso remoto a um determinado serviço sem a necessidade de configuração de DNS e regras de firewall[^3]. É necessário registo e configuração do serviço localmente:
     ```
@@ -49,5 +51,5 @@ Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o dese
     ```
 
 [^1]: Brevemente;
-[^2]: Esta ferramente foi substituida pelo The Things Network de forma a facilitar a implementação desta solução;
+[^2]: Esta ferramenta foi substituida pelo TTN de forma a facilitar a implementação desta solução;
 [^3]: Só deve ser utilizado em ambientes de testes;
