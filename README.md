@@ -34,8 +34,19 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v portainer_data:/data portainer/portainer-ce:latest
     ```
-Para a utilização total das funcionalidades oferecidas, é necessário configurar/utilizar as seguintes ferramentas/serviços:
+Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o desenvolvimento:
 - [The Things Network](https://www.thethingsnetwork.org/): Gestão da rede LoRaWAN (substituindo o Chirpstack para que a implementação seja simplificada);
+  
+- [Ngrok](https://ngrok.com/): Permite o acesso remoto a um determinado serviço sem a necessidade de configuração de DNS e regras de firewall[^2]. É necessário registo e configuração do serviço localmente:
+    ```
+    ngrok http 3000
+    ```
 
+- [localtunnel](https://localtunnel.github.io/www/): Serviço semelhante ao ngrok. Bem mais simples mas sem limite de 8h na versão gratuita nem necessidade de configurações extras (apenas necessário correr os seguintes comandos):
+    ```
+    npm install -g localtunnel
+    lt --port 3000
+    ```
 
 [^1]: Brevemente;
+[^2]: Só deve ser utilizado em ambientes de testes;
