@@ -12,12 +12,7 @@ Este sistema tem como objetivo integrar dados proveninentes de equipamentos e ap
 
 ## Tecnologias e Ferramentas
 Este sistema será implementado em ambiente Docker juntamente com as seguintes ferramentes:
-- [Chirpstack](https://www.chirpstack.io/docs/getting-started/docker.html): A utilização para gestão dos equipamentos de tecnologia LoRaWAN;
-    ```
-    git clone https://github.com/chirpstack/chirpstack-docker.git
-    cd chirpstack-docker
-    docker-compose up -d
-    ```
+- ~~[Chirpstack](https://www.chirpstack.io/docs/getting-started/docker.html): Utilizada para gestão local dos equipamentos de tecnologia LoRaWAN;~~
 - [MongoDB](https://hub.docker.com/_/mongo): O sistema de base de dados principal;
     ```
      docker run -d \
@@ -28,7 +23,7 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
         -e MONGODB_INITDB_ROOT_PASSWORD=mei23907 \
         mongo:4.4.21
     ```
-- [Portainer](https://docs.portainer.io/start/install-ce): Ferramente de gestão do ambiente Docker;
+- [Portainer](https://docs.portainer.io/start/install-ce): Ferramenta de gestão do ambiente Docker;
     ```
     docker volume create portainer_data
     docker run -d \
@@ -39,4 +34,8 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v portainer_data:/data portainer/portainer-ce:latest
     ```
+Para a utilização total das funcionalidades oferecidas, é necessário configurar/utilizar as seguintes ferramentas/serviços:
+- [The Things Network](https://www.thethingsnetwork.org/): Gestão da rede LoRaWAN (substituindo o Chirpstack para que a implementação seja simplificada);
+
+
 [^1]: Brevemente;
