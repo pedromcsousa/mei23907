@@ -12,7 +12,7 @@ Este sistema tem como objetivo integrar dados proveninentes de equipamentos e ap
 
 ## Tecnologias e Ferramentas
 Este sistema será implementado em ambiente Docker juntamente com as seguintes ferramentes:
-- ~~[Chirpstack](https://www.chirpstack.io/docs/getting-started/docker.html): Utilizada para gestão local dos equipamentos de tecnologia LoRaWAN;~~
+- ~~[Chirpstack](https://www.chirpstack.io/docs/getting-started/docker.html): Utilizada para gestão local dos equipamentos de tecnologia LoRaWAN;~~[^2]
 - [MongoDB](https://hub.docker.com/_/mongo): O sistema de base de dados principal;
     ```
      docker run -d \
@@ -37,7 +37,7 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
 Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o desenvolvimento:
 - [The Things Network](https://www.thethingsnetwork.org/): Gestão da rede LoRaWAN (substituindo o Chirpstack para que a implementação seja simplificada);
   
-- [Ngrok](https://ngrok.com/): Permite o acesso remoto a um determinado serviço sem a necessidade de configuração de DNS e regras de firewall[^2]. É necessário registo e configuração do serviço localmente:
+- [Ngrok](https://ngrok.com/): Permite o acesso remoto a um determinado serviço sem a necessidade de configuração de DNS e regras de firewall[^3]. É necessário registo e configuração do serviço localmente:
     ```
     ngrok http 3000
     ```
@@ -49,4 +49,5 @@ Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o dese
     ```
 
 [^1]: Brevemente;
-[^2]: Só deve ser utilizado em ambientes de testes;
+[^2]: Esta ferramente foi substituida pelo The Things Network de forma a facilitar a implementação desta solução;
+[^3]: Só deve ser utilizado em ambientes de testes;
