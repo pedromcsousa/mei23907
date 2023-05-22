@@ -5,6 +5,7 @@ import { LorawanModule } from './lorawan/lorawan.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { DeviceModule } from './device/device.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './user/user.module';
     MongooseModule.forRoot(process.env.MONGODB),
     LorawanModule,
     UserModule,
+    DeviceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
