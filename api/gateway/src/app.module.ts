@@ -6,12 +6,6 @@ import { LorawanModule } from './lorawan/lorawan.module';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'LORAWAN',
-        transport: Transport.TCP,
-      },
-    ]),
     LorawanModule,
   ],
   controllers: [AppController],
