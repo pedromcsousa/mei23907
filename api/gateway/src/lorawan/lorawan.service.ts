@@ -10,8 +10,8 @@ export class LorawanService {
   newData(newData: NewLoRaWANDataDTO) {
     console.log(newData.deviceInfo.devEUI);
     this.lorawanClient.emit(
-      'new_data',
-      new NewLorawanDataEvent(newData.deviceInfo.devEUI, {}),
+      'new_data', 
+      new NewLorawanDataEvent(newData.deviceInfo.devEUI, newData),
     );
   }
 }

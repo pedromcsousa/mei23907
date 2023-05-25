@@ -7,7 +7,7 @@ export class LorawanController {
   constructor(private readonly lorawanService: LorawanService) {}
 
   @Post()
-  newData(@Body() newLorawanData: NewLoRaWANDataDTO) {
+  newData(@Body() newLorawanData: any) {
     return this.lorawanService.newData(newLorawanData);
   }
 }

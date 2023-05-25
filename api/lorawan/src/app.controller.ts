@@ -9,6 +9,6 @@ export class AppController {
 
   @EventPattern('new_data')
   handleNewData(data: NewLorawanDataEvent) {
-    console.log(data);
+    console.log(data.data);
   }
 }
