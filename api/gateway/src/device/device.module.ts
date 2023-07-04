@@ -12,5 +12,6 @@ import { ReadingModule } from './reading/reading.module';
   ],
   controllers: [DeviceController],
   providers: [DeviceService],
+  exports: [DeviceService],
 })
 export class DeviceModule {}

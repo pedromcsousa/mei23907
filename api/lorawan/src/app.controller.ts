@@ -1,14 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { EventPattern } from '@nestjs/microservices';
-import { NewLorawanDataEvent } from './event/new-data.event';
+import { NewLoRaWANDataDTO } from './dto/new-data.dto';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @EventPattern('new_data')
-  handleNewData(data: NewLorawanDataEvent) {
-    console.log(data.data);
+  @Post()
+  newData(@Body() data: NewLoRaWANDataDTO) {
+    return this.appService.newData(
+      data.end_device_ids.dev_eui,
+      data.uplink_message.decoded_payload,
+    );
   }
 }

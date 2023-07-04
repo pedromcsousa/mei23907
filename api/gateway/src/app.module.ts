@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { LorawanModule } from './lorawan/lorawan.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { DeviceModule } from './device/device.module';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
@@ -13,9 +13,9 @@ import { DeviceModule } from './device/device.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.MONGODB),
-    LorawanModule,
     UserModule,
     DeviceModule,
+    SocketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

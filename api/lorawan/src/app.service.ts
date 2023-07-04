@@ -1,31 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { NewLorawanDataEvent } from './event/new-data.event';
-import { NewReadingDataEvent } from './event/new-reading';
+import { Injectable } from '@nestjs/common';
+import { INewReadingDataEvent } from './event/new-reading';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class AppService {
-  constructor(@Inject('READING') private readonly readingClient: ClientProxy) {}
+  constructor(private readonly httpService: HttpService) {}
 
-  newData(newData: NewReadingDataEvent) {
-    console.log(newData);
-    this.readingClient.emit(
-      'new_reading',
-      new NewReadingDataEvent(
-        newData.devEUI,
-        newData.longitude,
-        newData.latitude,
-        newData.altitude,
-      ),
-    );
-  }
-
-  async add(data: NewLorawanDataEvent) {
-    return this.newData({
-      ...data,
-      longitude: 0,
-      latitude: 0,
-      altitude: 0,
-    });
+  async newData(devEUI: string, newData: INewReadingDataEvent) {
+    return (
+      await this.httpService.axiosRef.post(
+        process.env.GATEWAY + `/device/${devEUI}/reading`,
+        {
+          ...newData,
+        },
+      )
+    ).data;
   }
 }

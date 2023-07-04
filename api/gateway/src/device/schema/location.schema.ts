@@ -8,5 +8,5 @@ export class Location {
   longitude: number;
 
   @Prop({ default: 0 })
-  altitude: number;
+  altitude?: number;
 }

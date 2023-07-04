@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'READING',
-        transport: Transport.TCP,
-      },
-    ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    HttpModule,
   ],
   controllers: [AppController],
   providers: [AppService],

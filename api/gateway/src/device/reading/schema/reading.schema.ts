@@ -16,6 +16,9 @@ export class Reading extends Location {
     ref: Device.name,
   })
   device: Types.ObjectId;
+
+  @Prop()
+  battery?: number;
 }
 
 export const ReadingSchema = SchemaFactory.createForClass(Reading);

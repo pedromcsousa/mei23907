@@ -1,20 +1,19 @@
-import { Controller } from '@nestjs/common';
-import { NewReadingExtendDTO } from './dto/new.dto';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 import { ReadingService } from './reading.service';
-import { EventPattern } from '@nestjs/microservices';
-import { NewReadingDataEvent } from './event/new-reading';
+import NewReadingDTO from './dto/new.dto';
 
-@Controller('reading')
+@Controller('device/:tag/reading')
 export class ReadingController {
   constructor(private readonly readingService: ReadingService) {}
 
-  @EventPattern('new_reading')
-  handleNewData(data: NewReadingDataEvent) {
+  @Post()
+  handleNewData(@Param('tag') deviceTag: string, @Body() data: NewReadingDTO) {
     return this.readingService.add(
-      data.devEUI,
+      deviceTag,
       data.latitude,
       data.longitude,
       data.altitude,
+      data.battery,
     );
   }
 }
