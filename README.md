@@ -9,6 +9,7 @@ Este sistema tem como objetivo integrar dados proveninentes de equipamentos e ap
 - [API](./api) - Incluí o código fonte dos serviços de backend:
     - [Gateway](./api/gateway) - Aplicação Gateway da API do sistema;
     - [Lorawan](./api/lorawan) - Microserviço de integração com o sistema LoRaWAN;
+- [Docker Compose](./docker-compose.yaml) - Ficheiros de configuração de serviços necessários;
 
 ## Tecnologias e Ferramentas
 Este sistema será implementado em ambiente Docker juntamente com as seguintes ferramentes:
@@ -34,6 +35,9 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v portainer_data:/data portainer/portainer-ce:latest
     ```
+- [Mosquitto](https://mosquitto.org/): MQTT Broker - utilizado para gestão dos pacotes MQTT;
+
+> :warning: **Todos estes serviços podem ser iniciados através do ficheiro [Docker Compose](./docker-compose.yaml): `` docker-compose up -d ``**
 
 Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o desenvolvimento:
 

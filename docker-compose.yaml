@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.4.21
+    container_name: mongodb
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=mei23907
+      - MONGODB_INITDB_ROOT_PASSWORD=mei23907
+    ports:
+      - 27017:27017
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    volumes:
+      - mosquitto:/mosquitto
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    ports:
+      - 1883:1883
+      - 9001:9001
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    volumes:
+      - portainer_data:/data - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+      - 9443:9443
+
+volumes:
+  portainer_data:
+  mosquitto_data:
+  mosquitto_log:
+  mosquitto:
+  mongo-data:
