@@ -24,6 +24,7 @@ export class ReadingService {
     altitude?: number,
     battery?: number,
   ): Promise<Reading | null> {
+    console.log(latitude);
     const newReading = new this.readingModel();
     const device = await this.deviceService.getByTag(deviceTag);
     if (!device) return null;
