@@ -12,15 +12,35 @@ services:
     ports:
       - 27017:27017
   mosquitto:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
     container_name: mosquitto
     volumes:
-      - mosquitto:/mosquitto
-      - mosquitto_data:/mosquitto/data
-      - mosquitto_log:/mosquitto/log
+      - type: bind
+        source: ./mosquitto/config/
+        target: /mosquitto/config/
+      - type: bind
+        source: ./mosquitto/log/
+        target: /mosquitto/log/
+      - type: volume
+        source: data
+        target: /mosquitto/data/
     ports:
-      - 1883:1883
-      - 9001:9001
+      - target: 1883
+        published: 1883
+        protocol: tcp
+        mode: host
+      - target: 9001
+        published: 9001
+        protocol: tcp
+        mode: host
+  node-red:
+    image: nodered/node-red
+    container_name: mynodered
+    volumes:
+      - node_red_data:/data
+    ports:
+      - 1880:1880
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -37,3 +57,6 @@ volumes:
   mosquitto_log:
   mosquitto:
   mongo-data:
+  node_red_data:
+  data:
+    name: "mqtt-broker-data"

@@ -12,7 +12,7 @@ Este sistema tem como objetivo integrar dados proveninentes de equipamentos e ap
 - [Docker Compose](./docker-compose.yaml) - Ficheiros de configuração de serviços necessários;
 
 ## Tecnologias e Ferramentas
-Este sistema será implementado em ambiente Docker juntamente com as seguintes ferramentes:
+Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o desenvolvimento:
 - ~~[Chirpstack](https://www.chirpstack.io/docs/getting-started/docker.html): Utilizada para gestão local dos equipamentos de tecnologia LoRaWAN;~~[^2]
 - [MongoDB](https://hub.docker.com/_/mongo): O sistema de base de dados principal;
     ```
@@ -37,9 +37,13 @@ Este sistema será implementado em ambiente Docker juntamente com as seguintes f
     ```
 - [Mosquitto](https://mosquitto.org/): MQTT Broker - utilizado para gestão dos pacotes MQTT;
 
+- [Node Red](https://nodered.org/docs/): Utilizado para testes e simulação de comunicações
+  ```
+  docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
+  ```
+
 > :warning: **Todos estes serviços podem ser iniciados através do ficheiro [Docker Compose](./docker-compose.yaml): `` docker-compose up -d ``**
 
-Algumas ferramentas que poderão ser úteis e/ou foram utilizadas durante o desenvolvimento:
 
 - [The Things Network (TTN)](https://www.thethingsnetwork.org/): Gestão da rede LoRaWAN (substituindo o Chirpstack para que a implementação seja simplificada);
   
