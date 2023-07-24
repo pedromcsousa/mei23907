@@ -8,4 +8,6 @@ export interface IDevice {
   tag: string;
   user?: string;
   lastLocation?: ILocation;
+  updatedAt: Date;
+  createdAt: Date;
 }

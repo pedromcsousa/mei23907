@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { Popup, Marker, MapContainer, TileLayer } from "react-leaflet"
+import { Popup, Marker, MapContainer, TileLayer, Tooltip } from "react-leaflet"
 import { IDevice } from "../../models/Device"
 import { getAllDevices } from "../../services/Device"
 import { INewReadingSocket, SocketEvents, socket } from "../../components/socket"
@@ -64,8 +64,13 @@ export default function Map(props: IMapProps) {
                 if (d.lastLocation)
                     return <Marker key={"marker_device_" + d._id} position={[d.lastLocation?.longitude, d.lastLocation?.latitude]}>
                         <Popup>
-                            {d._id}
+                            <i><small>{d._id}</small></i>
+                            <br />
+                            <small>Last communication: {d.updatedAt.toString()}</small>
                         </Popup>
+                        <Tooltip permanent>
+                            <b>{d.type}</b>
+                        </Tooltip>
                     </Marker>
                 return <></>
             })

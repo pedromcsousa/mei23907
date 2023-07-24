@@ -11,7 +11,7 @@ export default function Home() {
     const [center, setcenter] = useState<[number, number]>([0, 0])
 
     if (!devices || isError)
-        return <></>
+        return <>ERROR</>
     else
         return <>
             <Row style={{ height: "100vh" }}>
