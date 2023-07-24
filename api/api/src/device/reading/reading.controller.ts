@@ -7,12 +7,12 @@ export class ReadingController {
   constructor(private readonly readingService: ReadingService) {}
 
   @Post()
-  handleNewData(@Param('tag') deviceTag: string, @Body() data: any) {
-    console.log('11 - API Received', deviceTag, data);
+  handleNewData(@Param('tag') deviceTag: string, @Body() data: NewReadingDTO) {
     return this.readingService.add(
       deviceTag,
       data.latitude,
       data.longitude,
+      data.origin,
       data.altitude,
       data.battery,
     );

@@ -5,7 +5,7 @@ import { Location } from './location.schema';
 
 export type DeviceDocument = HydratedDocument<Device>;
 
-export type DeviceTypes = 'lorawan';
+export type DeviceTypes = 'lorawan' | 'mqtt';
 
 @Schema({ timestamps: true })
 export class Device {

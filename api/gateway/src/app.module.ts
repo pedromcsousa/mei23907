@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    LorawanModule
+    LorawanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -14,19 +14,24 @@ export class AppService {
       longitude: data.modbus[1].d,
       altitude: data.modbus[2].d,
     };
-    const result = await this.httpService.axiosRef.post(
-      process.env.API + `/device/${devId}/reading`,
-      stringify({
-        ...newData,
-      }),
-      {
-        timeout: 5000,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Access-Control-Allow-Origin': '*',
+    try {
+      const result = await this.httpService.axiosRef.post(
+        process.env.API + `/device/${devId}/reading`,
+        stringify({
+          ...newData,
+          origin: 'mqtt',
+        }),
+        {
+          timeout: 5000,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': '*',
+          },
         },
-      },
-    );
-    return result;
+      );
+      return result;
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

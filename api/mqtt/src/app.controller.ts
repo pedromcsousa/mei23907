@@ -1,22 +1,51 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { EventPattern } from '@nestjs/microservices';
-import { NewMqttData } from './event/new-mqtt';
+import * as mqtt from 'mqtt';
+import { NewMqttVegaPayload } from './event/new-mqtt';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  private client;
 
-  @EventPattern('new_mqtt_data')
-  handleNewData(data: NewMqttData) {
-    //Utilizou-se o equipamento https://en.iotvega.com/product/nb13 como referência
-    //De notar que o mesmo não envia a localização.
-    //Vamos supor que utiliza Modbus para o fazer
-    const payload = JSON.parse(data.payload);
-    if (payload.Message && payload.Telemetry)
-      return this.appService.newDataVega(
-        payload.Message.dev,
-        payload.Telemetry,
-      );
+  constructor(private readonly appService: AppService) {
+    const host = process.env.MQTT_HOST;
+    const port = process.env.MQTT_PORT;
+    const clientId = `mqtt_microservice_${Math.random().toString(16).slice(3)}`;
+
+    const connectUrl = `mqtt://${host}:${port}`;
+    const topic = '#';
+
+    this.client = mqtt.connect(connectUrl, {
+      clientId,
+      clean: true,
+      connectTimeout: 4000,
+      //username: '',
+      //password: '',
+      reconnectPeriod: 1000,
+    });
+
+    this.client.on('connect', () => {
+      console.log('Connected');
+      this.client.subscribe([topic], () => {
+        console.log(`Subscribe to topic '${topic}'`);
+      });
+    });
+
+    this.client.on('error', console.log);
+
+    this.client.on('message', async (topic, payload) => {
+      switch (topic) {
+        case '/vega':
+          const data = JSON.parse(payload.toString());
+          if (data.Message && data.Message.dev && data.Telemetry) {
+            const telemetry = data.Telemetry as NewMqttVegaPayload;
+            await this.appService.newDataVega(data.Message.dev, telemetry);
+          }
+          break;
+        default:
+          break;
+      }
+    });
   }
 }

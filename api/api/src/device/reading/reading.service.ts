@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Reading, ReadingTypes } from './schema/reading.schema';
 import { DeviceService } from '../device.service';
 import { SocketService } from 'src/socket/socket.service';
+import { DeviceTypes } from '../schema/device.schema';
 
 @Injectable()
 export class ReadingService {
@@ -21,13 +22,13 @@ export class ReadingService {
     deviceTag: string,
     latitude: number,
     longitude: number,
+    origin: DeviceTypes,
     altitude?: number,
     battery?: number,
   ): Promise<Reading | null> {
-    console.log(latitude);
     const newReading = new this.readingModel();
-    const device = await this.deviceService.getByTag(deviceTag);
-    if (!device) return null;
+    let device = await this.deviceService.getByTag(deviceTag);
+    if (!device) device = await this.deviceService.add(deviceTag, origin);
     const updLastLocationRes = await this.deviceService.updLastLocation(
       device._id,
       {
