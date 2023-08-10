@@ -4,6 +4,7 @@ import { IDevice } from "../../models/Device"
 import { getAllDevices } from "../../services/Device"
 import { INewReadingSocket, SocketEvents, socket } from "../../components/socket"
 import { useEffect, useRef, useState } from "react"
+import { isOnline } from "./Home"
 
 interface IMapProps {
     center: [number, number]
@@ -61,7 +62,7 @@ export default function Map(props: IMapProps) {
         />
         {
             devices.map(d => {
-                if (d.lastLocation)
+                if (d.lastLocation && isOnline(new Date(d.updatedAt)))
                     return <Marker key={"marker_device_" + d._id} position={[d.lastLocation?.longitude, d.lastLocation?.latitude]}>
                         <Popup>
                             <i><small>{d._id}</small></i>
