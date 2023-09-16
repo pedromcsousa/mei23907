@@ -5,6 +5,7 @@ Trabalho realizado por Pedro Sousa com orientação de Luís Ferreira
 Este sistema tem como objetivo integrar dados proveninentes de equipamentos e aplicações de forma a fornecer, em tempo real, dados dos utilizadores/praticantes de atividades ao ar livre.
 
 ## Estrutura do repositório
+- [Docs](./docs) - Diretório da documentação;
 - [Frontend](./frontend) - Incluí o código fonte da aplicação Frontend [^1]
 - [API](./api) - Incluí o código fonte dos serviços de backend:
     - [Gateway](./api/gateway) - Aplicação Gateway da API do sistema;
