@@ -9,6 +9,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       {
         name: 'LORAWAN',
         transport: Transport.TCP,
+        options: {
+          host: "lorawan",
+          port: 3000
+        }
       },
     ]),
   ],

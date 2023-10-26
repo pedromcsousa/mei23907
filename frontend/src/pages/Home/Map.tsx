@@ -15,7 +15,7 @@ export default function Map(props: IMapProps) {
 
     const mapRef = useRef<L.Map>(null);
 
-    const [isConnected, setIsConnected] = useState(socket.connected);
+    const [, setIsConnected] = useState(socket.connected);
 
     useEffect(() => {
         function onConnect() {

@@ -10,9 +10,9 @@ export function isOnline(updatedAt: Date | string) {
     return new Date(updatedAt) >= new Date(new Date().setSeconds(new Date().getSeconds() - 30));
 }
 
-function secondsAgo(date: Date | string) {
+/*function secondsAgo(date: Date | string) {
     return new Date(date).getMinutes() - new Date().getMinutes()
-}
+}*/
 
 export default function Home() {
     const { data: devices, isError } = useQuery<Array<IDevice>>({ queryKey: ['devices'], queryFn: getAllDevices })
