@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { getAllDevices } from "../../services/Device"
 import { IDevice } from "../../models/Device"
-import { Col, ListGroup, Row } from "react-bootstrap"
 import Map from "./Map"
-import { useState } from "react"
-import { filter } from 'lodash';
+import { useEffect, useState } from "react"
+import { SocketEvents, socket } from "../../components/socket"
+import Status from "./Status"
 
 export function isOnline(updatedAt: Date | string) {
     return new Date(updatedAt) >= new Date(new Date().setSeconds(new Date().getSeconds() - 30));
@@ -14,47 +14,41 @@ export function isOnline(updatedAt: Date | string) {
     return new Date(date).getMinutes() - new Date().getMinutes()
 }*/
 
+export interface IDeviceExt extends IDevice {
+    online: boolean;
+}
+
 export default function Home() {
-    const { data: devices, isError } = useQuery<Array<IDevice>>({ queryKey: ['devices'], queryFn: getAllDevices })
+    const { data: devices, isError, refetch } = useQuery<Array<IDevice>>({ queryKey: ['devices'], queryFn: getAllDevices })
 
-    const [center, setcenter] = useState<[number, number]>([0, 0])
+    const [center, setcenter] = useState<[number, number]>([41.53678836934385, -8.627784648005294])
 
-    if (!devices || isError)
+    const [devicesState, setDevicesState] = useState<Array<IDeviceExt>>()
+
+    useEffect(() => {
+        setDevicesState(devices?.map(d => ({
+            ...d,
+            online: isOnline(d.updatedAt)
+        })));
+    }, [devices])
+
+    useEffect(() => {
+        function onReadingEvent() {
+            refetch()
+        }
+
+        socket.on(SocketEvents.reading, onReadingEvent);
+
+        return () => {
+            socket.off(SocketEvents.reading, onReadingEvent);
+        };
+    }, []);
+
+    if (!devicesState || isError)
         return <>ERROR</>
     else
-        return <>
-            <Row style={{ height: "100vh" }}>
-                <Col md={2} style={{ paddingTop: "1rem" }}>
-                    <h4 style={{ color: "green" }}>Online</h4>
-                    <ListGroup>
-                        {
-                            filter(devices, (d: IDevice) => isOnline(new Date(d.updatedAt))).map((d: IDevice) => <ListGroup.Item
-                                className="hover"
-                                onClick={() => { if (d.lastLocation) setcenter([d.lastLocation?.longitude, d.lastLocation?.latitude]) }}
-                                key={"device_" + d._id}>
-                                {d.tag}
-                            </ListGroup.Item>
-                            )
-                        }
-                    </ListGroup>
-                    <h5 style={{ color: "gray" }}>Offline</h5>
-                    <ListGroup>
-                        {
-                            filter(devices, (d: IDevice) => !isOnline(d.updatedAt)).map((d: IDevice) => <ListGroup.Item
-                                className="hover"
-                                onClick={() => { if (d.lastLocation) setcenter([d.lastLocation?.longitude, d.lastLocation?.latitude]) }}
-                                key={"device_" + d._id}
-                                style={{ backgroundColor: "gray", borderColor: "gray" }}
-                            >
-                                {d.tag}
-                            </ListGroup.Item>
-                            )
-                        }
-                    </ListGroup>
-                </Col>
-                <Col>
-                    <Map center={center} />
-                </Col>
-            </Row>
-        </>
+        return <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+            <Status devices={devicesState} setCenter={setcenter} />
+            <Map center={center} />
+        </div>
 }

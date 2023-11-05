@@ -5,6 +5,7 @@ import { Reading, ReadingTypes } from './schema/reading.schema';
 import { DeviceService } from '../device.service';
 import { SocketService } from 'src/socket/socket.service';
 import { DeviceTypes } from '../schema/device.schema';
+import IErrrorMessage from 'src/utils/error.scheam';
 
 @Injectable()
 export class ReadingService {
@@ -14,8 +15,25 @@ export class ReadingService {
     private readonly socketService: SocketService,
   ) {}
 
-  async getAll(): Promise<Array<Reading>> {
+  /*async getAll(): Promise<Array<Reading>> {
     return this.readingModel.find().populate('device');
+  }*/
+
+  async getFromDevice(
+    deviceTag: string,
+  ): Promise<Array<Reading> | IErrrorMessage> {
+    let device = await this.deviceService.getByTag(deviceTag);
+    if (!device)
+      return {
+        error: true,
+        message: '',
+      };
+    return this.readingModel
+      .find({
+        device: device._id,
+      })
+      .populate('device')
+      .sort("-createdAt")
   }
 
   async add(

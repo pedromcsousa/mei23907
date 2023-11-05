@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { LorawanController } from './lorawan.controller';
 import { LorawanService } from './lorawan.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import config from 'src/config/config';
 
 @Module({
   imports: [
@@ -10,8 +11,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         name: 'LORAWAN',
         transport: Transport.TCP,
         options: {
-          host: "lorawan",
-          port: 3000
+          host: config.MS_LORAWAN_HOST,
+          port: config.MS_LORAWAN_PORT
         }
       },
     ]),

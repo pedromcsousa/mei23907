@@ -2,17 +2,11 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LorawanModule } from './lorawan/lorawan.module';
-import { ConfigModule } from '@nestjs/config';
 import { HealthCheckModule } from './health-check/health-check.module';
+import { ConfigModule } from './config/config.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    LorawanModule,
-    HealthCheckModule,
-  ],
+  imports: [ConfigModule, LorawanModule, HealthCheckModule],
   controllers: [AppController],
   providers: [AppService],
 })

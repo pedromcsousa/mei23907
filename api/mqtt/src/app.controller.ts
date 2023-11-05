@@ -20,9 +20,9 @@ export class AppController {
       clientId,
       clean: true,
       connectTimeout: 4000,
+      reconnectPeriod: 1000,
       //username: '',
       //password: '',
-      reconnectPeriod: 1000,
     });
 
     this.client.on('connect', () => {

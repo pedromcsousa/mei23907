@@ -51,6 +51,7 @@ services:
       - 8000:8000
       - 9443:9443
   frontend:
+    env_file: ./api/gateway/.env
     depends_on:
       - api
     build:
@@ -58,11 +59,13 @@ services:
     ports:
       - 3000:80
   api:
+    env_file: ./api/api/.env
     build:
       context: ./api/api
     ports:
       - 3001:3001
   gateway:
+    env_file: ./api/gateway/.env
     build:
       context: ./api/gateway
     ports:
@@ -75,12 +78,15 @@ services:
       timeout: 10s
     restart: "on-failure"
   lorawan:
+    env_file: ./api/lorawan/.env
     build:
       context: ./api/lorawan
     depends_on:
       gateway:
         condition: service_healthy
+    restart: "on-failure"
   mqtt:
+    env_file: ./api/mqtt/.env
     build:
       context: ./api/mqtt
     depends_on:

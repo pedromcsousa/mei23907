@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ReadingService } from './reading.service';
 import NewReadingDTO from './dto/new.dto';
 
@@ -16,5 +16,12 @@ export class ReadingController {
       data.altitude,
       data.battery,
     );
+  }
+
+  @Get()
+  async getHistory(
+    @Param('tag') deviceTag: string
+  ) {
+    return this.readingService.getFromDevice(deviceTag);
   }
 }
