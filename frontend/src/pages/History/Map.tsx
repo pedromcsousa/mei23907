@@ -1,7 +1,6 @@
-import { Popup, Marker, MapContainer, TileLayer, Tooltip, Polyline } from "react-leaflet"
+import { Popup, Marker, MapContainer, TileLayer, Polyline } from "react-leaflet"
 import { INewReadingSocket, SocketEvents, socket } from "../../components/socket"
 import { useEffect, useRef } from "react"
-import { Button } from "react-bootstrap"
 import { IReading } from "../../models/Reading"
 import { LatLngTuple } from "leaflet"
 import { formatDate } from "../../utils/data"

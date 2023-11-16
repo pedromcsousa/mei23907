@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { Popup, Marker, MapContainer, TileLayer, Tooltip } from "react-leaflet"
+import { Popup, Marker, MapContainer, TileLayer } from "react-leaflet"
 import { IDevice } from "../../models/Device"
 import { getAllDevices } from "../../services/Device"
-import { INewReadingSocket, SocketEvents, socket } from "../../components/socket"
+import { SocketEvents, socket } from "../../components/socket"
 import { useEffect, useRef, useState } from "react"
 import { isOnline } from "./Home"
 import { Icon } from "leaflet"
@@ -19,7 +19,8 @@ export default function Map(props: IMapProps) {
 
     const { data: devices, isError, refetch } = useQuery<Array<IDevice>>({
         queryKey: ['devices'],
-        queryFn: getAllDevices
+        queryFn: getAllDevices,
+        refetchInterval: 10000
     })
 
     const mapRef = useRef<L.Map>(null);
@@ -35,10 +36,8 @@ export default function Map(props: IMapProps) {
             setIsConnected(false);
         }
 
-        function onReadingEvent(data: INewReadingSocket) {
+        function onReadingEvent() {
             refetch()
-            //if (mapRef.current)
-            //mapRef.current.setView([data.location.longitude, data.location.latitude])
         }
 
         socket.on('connect', onConnect);
@@ -98,14 +97,11 @@ export default function Map(props: IMapProps) {
                         <Popup>
                             <h4>{d.type}</h4>
                             <small>Last communication: {formatDate(new Date(d.updatedAt))}</small>
-                            <br/>
-                            <Button size="sm" onClick={() => navigate("/history/" + d.tag)} >Histórico</Button>
+                            <br />
+                            <Button size="sm" onClick={() => navigate("/history/" + d.tag)} >History</Button>
                         </Popup>
-                        {/*<Tooltip permanent>
-                            <b>{d.type}</b>
-                        </Tooltip>*/}
                     </Marker>
-                return <></>
+                return null
             })
         }
     </MapContainer>

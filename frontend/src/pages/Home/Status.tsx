@@ -1,16 +1,17 @@
-import { IDeviceExt } from "./Home"
+import { isOnline } from "./Home"
 import { filter } from "lodash";
 import { Dispatch, SetStateAction } from "react";
+import { IDevice } from "../../models/Device";
 
 type Props = {
-    devices: Array<IDeviceExt>,
+    devices: Array<IDevice>,
     setCenter: Dispatch<SetStateAction<[number, number]>>
 }
 
 function Status({ devices }: Props) {
 
-    const online = filter(devices, (d: IDeviceExt) => d.online);
-    const offline = filter(devices, (d: IDeviceExt) => !d.online);
+    const online = filter(devices, (d: IDevice) => isOnline(new Date(d.updatedAt)));
+    const offline = filter(devices, (d: IDevice) => !isOnline(new Date(d.updatedAt)));
 
     return <span style={{
         backgroundColor: "#16161dee",
