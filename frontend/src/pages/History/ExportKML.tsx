@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { IReading } from "../../models/Reading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
@@ -42,7 +42,17 @@ export default function ExportKML(props: Props) {
         downloadFile(tokml(geoJSON))
     }
 
-    return <Button variant="outline-primary" onClick={download} style={{ position: "absolute", top: "1rem", left: "9.5rem", zIndex: 99999 }}>
-        <FontAwesomeIcon icon={faFileDownload} />
-    </Button>
+    return <OverlayTrigger
+        placement="right"
+        delay={{ show: 250, hide: 400 }}
+        overlay={(props) => (
+            <Tooltip id="button-tooltip-export" {...props}>
+                Exportar (.kml)
+            </Tooltip>
+        )}
+    >
+        <Button variant="outline-primary" onClick={download} style={{ position: "absolute", top: "1rem", left: "9.5rem", zIndex: 99999 }}>
+            <FontAwesomeIcon icon={faFileDownload} />
+        </Button>
+    </OverlayTrigger >
 }
